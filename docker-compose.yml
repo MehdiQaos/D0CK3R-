@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  mysqldbAftas:
+    image: mysql
+    restart: always
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_DATABASE: Aftas
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_USER: mehdi
+      MYSQL_PASSWORD: 1234
+  api:
+    build: ./Aftas-api
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysqldbAftas
+  aftas_front:
+    build: ./Aftas-angular
+    restart: always
+    ports:
+      - 4200:4200
+    depends_on:
+      - api
