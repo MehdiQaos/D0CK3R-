@@ -1,26 +1,38 @@
 version: "3.8"
 services:
-  mysqldbAftas:
-    image: mysql
+  aftas_db:
+    image: mysql:8.2.0
     restart: always
     ports:
-      - 3307:3306
+      - "3307:${MYSQL_PORT}"
     environment:
-      MYSQL_DATABASE: Aftas
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_USER: mehdi
-      MYSQL_PASSWORD: 1234
-  api:
-    build: ./Aftas-api
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+  aftas_api:
+    build:
+      context: ./Aftas-api
+      dockerfile: Dockerfile
     restart: always
     ports:
-      - "8080:8080"
+      - "${API_PORT}:${API_PORT}"
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_HOST: aftas_db
+      MYSQL_PORT: ${MYSQL_PORT}
     depends_on:
-      - mysqldbAftas
+      - aftas_db
+
   aftas_front:
-    build: ./Aftas-angular
+    build:
+      context: ./Aftas-angular
+      dockerfile: Dockerfile
     restart: always
     ports:
-      - 4200:4200
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
     depends_on:
-      - api
+      - aftas_api
