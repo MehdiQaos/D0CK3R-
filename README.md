@@ -2,21 +2,6 @@
 
 This guide will help you clone the necessary repositories, build the project, and access the application and its services.
 
-## Cloning Repositories
-
-Ensure that the `clone_repos.sh` script has execute rights. If not, run the following command:
-
-```bash
-chmod +x clone_repos.sh
-
-```
-
-Then, run the following command to clone the repositories:
-
-```bash
-./clone_repos.sh
-
-```
 
 ## Building the Project
 
