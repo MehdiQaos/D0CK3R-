@@ -1,17 +1,7 @@
 #!/bin/bash
 
-# GitHub repositories
-API_REPO="https://github.com/MehdiQaos/Aftas-api.git"
-FRONTEND_REPO="https://github.com/MehdiQaos/Aftas-angular.git"
+source .env
 
-# Directory names
-API_DIR="Aftas-api"
-FRONTEND_DIR="Aftas-angular"
-
-API_BRANCH="docker"
-FRONTEND_BRANCH="docker"
-
-# Function to clone a repository into a directory
 clone_repository() {
     REPO_URL=$1
     DIR_NAME=$2

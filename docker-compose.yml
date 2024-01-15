@@ -10,10 +10,12 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    networks:
+      - aftas_network
 
   aftas_api:
     build:
-      context: ./Aftas-api
+      context: ${API_DIR}
       dockerfile: Dockerfile
     restart: always
     ports:
@@ -26,13 +28,21 @@ services:
       MYSQL_PORT: ${MYSQL_PORT}
     depends_on:
       - aftas_db
+    networks:
+      - aftas_network
 
   aftas_front:
     build:
-      context: ./Aftas-angular
+      context: ${FRONTEND_DIR}
       dockerfile: Dockerfile
     restart: always
     ports:
       - "${FRONTEND_PORT}:${FRONTEND_PORT}"
     depends_on:
       - aftas_api
+    networks:
+      - aftas_network
+
+networks:
+  aftas_network:
+    driver: bridge
