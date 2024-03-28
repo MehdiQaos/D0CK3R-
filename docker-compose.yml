@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-  aftas_db:
+  connectly_db:
     image: mysql:8.2.0
     restart: always
     ports:
@@ -11,9 +11,9 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     networks:
-      - aftas_network
+      - connectly_network
 
-  aftas_api:
+  connectly_api:
     build:
       context: dockerfiles
       dockerfile: api.Dockerfile
@@ -27,14 +27,14 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_HOST: aftas_db
+      MYSQL_HOST: connectly_db
       MYSQL_PORT: ${MYSQL_PORT}
     depends_on:
-      - aftas_db
+      - connectly_db
     networks:
-      - aftas_network
+      - connectly_network
 
-  aftas_front:
+  connectly_front:
     build:
       context: dockerfiles
       dockerfile: frontend.Dockerfile
@@ -45,10 +45,10 @@ services:
     ports:
       - "${FRONTEND_PORT}:${FRONTEND_PORT}"
     depends_on:
-      - aftas_api
+      - connectly_api
     networks:
-      - aftas_network
+      - connectly_network
 
 networks:
-  aftas_network:
+  connectly_network:
     driver: bridge
