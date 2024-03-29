@@ -10,7 +10,7 @@ WORKDIR $BUILD_HOME
 RUN git clone --branch $REPO_BRANCH $REPO_LINK .
 
 
-FROM node:20.11.0-alpine3.19
+FROM node:20.9.0
 
 WORKDIR /app
 
